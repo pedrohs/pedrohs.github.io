@@ -1,64 +1,69 @@
-# SITE CONFIGURATION
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://pedrohs.github.io/" # the base hostname & protocol for your site
+title:            Pedro HS
+description:      Tutoriais e dicas para node.js e arduino
+disqus_shortname: gitpedrohs
+reading_time:     true
+words_per_minute: 200
+# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
+# When testing locally leave blank or use http://localhost:4000
+url:
 
-# THEME-SPECIFIC CONFIGURATION
-theme:
-  # Meta
-  title: Pedro HS
-  avatar: avatar.png
-  gravatar: # email md5 hash
-  description: "Tutoriais sobre arduino, node.js e muito mais" # used by search engines
-  
-  # Header and footer text
-  header_text:
-  footer_text: >
-   Powered by <a href="http://jekyllrb.com">Jekyll</a> with <a href="https://rohanchandra.github.io/project/type/">Type Theme</a>
-  
-  # Icons
-  rss: false
-  email_address: # full email address, e.g. "sam@example.com"
-  behance:
-  bitbucket: 
-  dribbble: 
-  facebook: 
-  flickr: 
-  github: "pedrohs"
-  google_plus: 
-  instagram: 
-  linkedin:  # full URL
-  pinterest: 
-  reddit: 
-  soundcloud: 
-  stack_exchange:  # full URL
-  steam: 
-  tumblr: 
-  twitter:
-  wordpress: 
-  youtube:
-  
-  # Scripts
-  google_analytics: # tracking id, e.g. "UA-000000-01"
-  disqus_shortname: gitpedrohs
-  
-  # Localization strings
-  str_follow_on: "Follow on"
-  str_rss_follow: "Follow RSS feed"
-  str_email: "Email"
-  str_next: "Proximo"
-  str_prev: "Voltar"
-  str_continue_reading: "Continue Lendo"
-  
-  # Colors, typography and padding
-  # Open the "_sass > base" folder, and open "_variables.scss"
+# Owner/author information
+owner:
+  name:           Pedro Henrique
+  avatar:         avatar.jpg
+  bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
+  email:          you@email.com
+  # Social networking links used in footer. Update and remove as you like.
+  twitter:        
+  facebook:       
+  github:         
+  stackexchange:  
+  linkedin:       
+  instagram:      
+  flickr:         
+  tumblr:         
+  # google plus id, include the '+', eg +mmistakes
+  google_plus:    +yourid
 
-# PAGINATION
-paginate: 5
-paginate_path: "blog/page:num"
+# Background image to be tiled on all pages
+background: 
 
-# BUILD SETTINGS
-markdown: kramdown
+# Analytics and webmaster tools stuff goes here
+google_analytics:   
+google_verify:      
+# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
+bing_verify:         
+
+# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone:    America/Sao_Paulo
+future:      true
 highlighter: pygments
+markdown:    kramdown
+gems:
+  - jekyll-sitemap
 sass:
   sass_dir: _sass
-  style: :compressed
+  style: compressed
+
+# https://github.com/mojombo/jekyll/wiki/Permalinks
+permalink:   /:categories/:title/
+
+# Amount of post to show on home page
+paginate: 5
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  use_coderay: true
+
+  coderay:
+    coderay_line_numbers: nil
+    coderay_line_numbers_start: 1
+    coderay_tab_width: 4
+    coderay_bold_every: 10
+    coderay_css: class
+
+include: [".htaccess"]
+exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
