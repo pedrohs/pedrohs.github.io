@@ -3,6 +3,7 @@ layout: post
 title: "Piscando led com Node.js e Arduino"
 date: 2015-02-15 18:08:20
 tags: [nodejs, arduino]
+description: Bom hoje finalmente vamos brincar um pouco com arduino \o/, e como de paste vamos piscar um led utilizando o Arduino Uno, mas também funciona com o Arduino Mega, Nano, Leonardo etc e não vamos digitar nenhum código na Ide do Arduino, Então let's go
 image:
   feature: arduino.jpg
 ---

@@ -3,6 +3,7 @@ layout: post
 title: Controlando led utilizando botão com Node.js e Arduíno
 date: 2015-02-17 11:12:51
 tags: [nodejs, arduino]
+description: Continuando a serie de postagem sobre node.js e Arduíno, hoje vamos ligar e desliga um led utilizando um botão, e como de praste não vamos escrever nenhum código no Arduíno
 image:
   feature: arduino.jpg 
 ---

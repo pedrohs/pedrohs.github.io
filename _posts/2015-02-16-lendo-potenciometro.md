@@ -3,6 +3,7 @@ layout: post
 title: Lendo potenciômetro com Node.js e Arduíno
 date: 2015-02-16 15:11:24
 tags: [nodejs, arduino]
+description: Hoje vamos ler o valor de um potenciômetro ligado ao Arduíno utilizando o modulo johnny-five do node.js sem digitar nenhum código no Arduíno como na postagem anterior
 image:
   feature: arduino.jpg 
 ---

@@ -2,6 +2,7 @@
 layout: post
 title:  "Node.JS, Instalação e mais umas coisinhas"
 date:   2015-02-15 13:55:42
+description: Pretendo começar uma serie de tutoriais usando Node.js e Arduino e para isso preciso antes mostrá-los a como fazer a instalação do Node.js e mais algumas ferramentas que podem ajudar e muito vocês! 
 tags: [nodejs]
 ---
 Pretendo começar uma serie de tutoriais usando Node.js e Arduino e para isso preciso antes mostrá-los a como fazer a instalação do Node.js e mais algumas ferramentas que podem ajudar e muito vocês! 
