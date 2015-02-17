@@ -4,13 +4,116 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="https://pedrohs.github.io/feed.xml" />
 <link rel="alternate" type="text/html" href="https://pedrohs.github.io" />
-<updated>2015-02-16T22:32:42-02:00</updated>
+<updated>2015-02-17T12:40:00-02:00</updated>
 <id>https://pedrohs.github.io/</id>
 <author>
   <name>Pedro Henrique</name>
   <uri>https://pedrohs.github.io/</uri>
   <email>9.pedro.deoliveira@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Controlando led utilizando botão com Node.js e Arduíno]]></title>
+ <link rel="alternate" type="text/html" href="https://pedrohs.github.io/controlando-led-com-botao/" />
+  <id>https://pedrohs.github.io/controlando-led-com-botao</id>
+  <published>2015-02-17T09:12:51-02:00</published>
+  <updated>2015-02-17T09:12:51-02:00</updated>
+  <author>
+    <name>Pedro Henrique</name>
+    <uri>https://pedrohs.github.io</uri>
+    <email>9.pedro.deoliveira@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;Continuando a serie de postagem sobre node.js e Arduíno, hoje vamos ligar e desliga um led utilizando um botão, e como de praste não vamos escrever nenhum código no Arduíno.&lt;/p&gt;
+
+&lt;p&gt;E como nas postagens anteriores antes de tudo precisamos enviar para o Arduíno o código &lt;strong&gt;StandardFirmata&lt;/strong&gt; que tem na propria IDE do Arduíno, então para envia-lá abra a IDE do Arduíno e acesse &lt;strong&gt;Files &amp;gt; Examples &amp;gt; Firmata &amp;gt; StandardFirmata&lt;/strong&gt; em seguida clique em &lt;strong&gt;Upload&lt;/strong&gt;.
+Arduino pronto vamos montar na nossa protoboard o led e botão. 
+&lt;strong&gt;Vou mostrar a como fazer a ligação usando um botão de 2 terminais, e um de 4 terminais.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Primeiro o botão com 2 terminais:&lt;/strong&gt;
+&lt;img src=&quot;/images/img-posts/esquema-botao-2-termiais.jpg&quot; alt=&quot;Ligação botão 2 terminais com o led&quot; /&gt;
+&lt;em&gt;Notem que o botão esta ligado a &lt;strong&gt;porta digital 3&lt;/strong&gt; do Arduíno e o led a &lt;strong&gt;porta digital 2&lt;/strong&gt; Vale ressaltar que estou utilizando um resistor de 100 ohms ligado no terminal positivo do led&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Agora o esquema de montagem com o botão de 4 terminais:&lt;/strong&gt;
+&lt;img src=&quot;/images/img-posts/esquema-botao-4-termiais.jpg&quot; alt=&quot;Ligação botão 4 terminais com o led&quot; /&gt;
+&lt;em&gt;Notem que o botão esta ligado a &lt;strong&gt;porta digital 3&lt;/strong&gt; do Arduíno como no botão de 2 terminais, o led esta ligado a &lt;strong&gt;porta digital 2&lt;/strong&gt; do Arduíno com um resistor de 100 ohms&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Feita a ligação do led e botão ao Arduíno vamos começar a escrever nosso código, crie uma pasta para ficar salvo seu projeto, utilizando o &lt;strong&gt;terminal&lt;/strong&gt; ou &lt;strong&gt;prompt de comando&lt;/strong&gt; do windows acesse ela e digite:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install johnny-five
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;esse comando irá instalar o modulo johnny-five que utilizamos nas outras postagens para controlar nosso Arduíno, com o modulo instalado crie um arquivo com o nome de &lt;strong&gt;&lt;em&gt;app.js&lt;/em&gt;&lt;/strong&gt; nele vamos escrever nosso codigo, então vamos lá:&lt;/p&gt;
+
+&lt;p&gt;Começamos definindo o modulo johnny-five:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;johnny-five&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora precisamos definir nosso arduino:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A função five.Board() irá automaticamente procurar o Arduíno ligado a USB e se conectar, caso queira definir uma porta, basta definir dentro dos parenteses de &lt;strong&gt;Board()&lt;/strong&gt;, Exemplo: five.Board(“COM1”); assim ele tentara se conectar ao arduino que esteja ligado a porta &lt;strong&gt;COM1&lt;/strong&gt; caso não consiga irá retornar um erro no console&lt;/p&gt;
+
+&lt;p&gt;Continuando, como nas postagens anteriores precisamos antes de definir nosso led e botão saber quando o arduino estara pronto, para isso digitamos:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ready&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+   	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Arduíno Pronto&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   	&lt;span class=&quot;c1&quot;&gt;//todo código a seguir vai aqui dentro &lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Assim que o Arduíno estiver pronto será exibida a mensagem &lt;em&gt;Arduino Pronto&lt;/em&gt; no console, seguindo com nosso codigo, vamos definir nosso led:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;led&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Led&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//lembrando que o numero 2 é referente a porta do Arduíno que esteja ligado o led&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora vamos definir nosso botão:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;botao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;pin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//pino do arduino ligado ao botão&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;isPullup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// só defina como verdadeiro(true) esse parâmetro caso seu botão seja de 2 terminais, caso seja de 4 terminais nem é preciso definir ele, pois por padrão é definido como false&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Definido nosso botão vamos alterar o estado do nosso led toda vez que o botão for pressionado, então se ele estiver desligado será ligado e se estiver desligado será ligado, e para sabermos se o botão foi pressionado existe a função &lt;strong&gt;.on&lt;/strong&gt;, então:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;botao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//assim a função será executada toda vez que o botão descer&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//código do led vai aqui &lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Para alterarmos o estado do led de &lt;strong&gt;ligado&lt;/strong&gt; para &lt;strong&gt;desligado&lt;/strong&gt; ou inversamente existe a função &lt;em&gt;.toggle()&lt;/em&gt; que toda vez que é executada ela vai inverter o valor do led então se for &lt;strong&gt;on&lt;/strong&gt; passa a ser &lt;strong&gt;off&lt;/strong&gt; e se for &lt;strong&gt;off&lt;/strong&gt; passa ser &lt;strong&gt;on&lt;/strong&gt; sacaram ?, vamos ver como fica:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;led&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toggle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Simples não? :), terminamos o código, devera ficar mais ou menos assim:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;johnny-five&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ready&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Arduino Pronto&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;led&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Led&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;botao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;pin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;isPullup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+	&lt;span class=&quot;nx&quot;&gt;botao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;led&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toggle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Para executar o codigo abra seu terminal ou prompt de comando e digite:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node app.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Feito isso espere aparecer a mensagem &lt;em&gt;Arduino Pronto&lt;/em&gt; assim que aparecer pressione o botão uma vez e verá o led ligar, pressione novamente e ele vai desligar.&lt;/p&gt;
+
+&lt;p&gt;Viram como é simples? Caso queiram ver mais funções que podem fazer com o botão e o led acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-five Wiki&lt;/a&gt;, espero que tenham gostado se possível comente fale oque achou da postagem se encontrou algum erro etc, vejo vocês na próxima. &lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://pedrohs.github.io/controlando-led-com-botao/&quot;&gt;Controlando led utilizando botão com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;https://pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 17, 2015.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
