@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Barra de leds com potenciômetro  usando Node.js e Arduíno
+title: Barra de leds com potenciômetro utilizando Node.js e Arduíno
 date: 2015-02-18 09:14:23
 description: Nos últimos posts falamos sobre Potenciômetros e Leds então que tal brincar um pouco usando os dois juntos ?, vamos montar uma barra de leds que conforme é aumentado o valor do potenciômetro os leds vão acendendo e se diminuir eles apagaram e para ficar mais *bonitinho* vamos ligar os leds nos PWMs do Arduíno para fazer um efeito fade para quando acender e apagar os leds.
 tags: [nodejs, arduino]
