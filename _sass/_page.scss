@@ -61,6 +61,55 @@ body {
 		color: lighten($base-color,20);
 	}
 }
+.modalHide {
+	visibility: hidden;
+}
+#modalPesq {
+	position: fixed;
+	max-width: 800px;
+	background-color: $white;
+	border:1px solid #DDDDDD;
+	padding: 15px;
+	box-sizing: border-box;
+	border-radius: 2px;
+	z-index: 999;
+	display: block;
+	top: 10%;
+	box-shadow: 0 0 0 0,0 6px 12px rgba(34,34,34,0.1);
+	@media #{$small} {
+		min-width: 100%;
+		left:0%;
+	}
+	@media #{$medium}{
+		min-width: 700px;
+		left: 50%;
+	}
+	@media #{$large}{
+		min-width: 800px;
+	}
+	div{
+		max-height: 500px;
+		overflow: auto;
+	}
+	#modalClose{
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		cursor: pointer;
+	}
+	#resultados {
+		div{
+			border-bottom: 1px solid #D7D7D7;
+		}
+	}
+}
+.pagination {
+	list-style: none;
+	li{
+		display: inline;
+		font-size: 21px;
+	}
+}
 .feature .header-title {
 	position: absolute;
 	top: 0;

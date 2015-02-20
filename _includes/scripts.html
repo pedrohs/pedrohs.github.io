@@ -1,3 +1,6 @@
+<script src="{{site.url}}/assets/js/angular.js"></script>
+<script src="{{site.url}}/assets/js/directivas/dirPagination.js"></script>
+<script src="{{site.url}}/assets/js/controllers/menuctrl.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="{{ site.url }}/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 <script src="{{ site.url }}/assets/js/scripts.min.js"></script>
@@ -13,6 +16,28 @@
   ga('create', '{{ site.google_analytics }}', 'auto');  
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
+</script>
+<script>
+	$(document).ready(function(){
+
+		responseModal();
+
+		$(window).resize(function(){
+			responseModal();
+		});
+
+		function responseModal(){
+			var larguraTela = $(window).width();
+ 			if(larguraTela >= 768){
+ 				var larguraModal = $('#modalPesq').width();
+ 				var valorModal = larguraModal / 2;
+ 				valorModal = valorModal * -1;
+ 				$("#modalPesq").css({marginLeft: valorModal});
+ 			}else{
+ 				$("#modalPesq").css({marginLeft: 0});
+ 			}
+		}		
+	});
 </script>
 {% endif %}
 

@@ -7,7 +7,7 @@
 {% include head.html %}
 </head>
 
-<body id="page" {% if page.image.feature %}class="feature"{% endif %}>
+<body ng-app="App" ng-controller="menuCtrl" id="page" {% if page.image.feature %}class="feature"{% endif %}>
 
 {% include browser-upgrade.html %}
 {% include navigation.html %}

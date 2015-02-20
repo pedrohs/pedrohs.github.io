@@ -7,7 +7,7 @@
 {% include head.html %}
 </head>
 
-<body id="post-index" {% if page.image.feature %}class="feature"{% endif %}>
+<body ng-app="App" ng-controller="menuCtrl" id="post-index" {% if page.image.feature %}class="feature"{% endif %}>
 
 {% include browser-upgrade.html %}
 {% include navigation.html %}
@@ -38,6 +38,5 @@
 </div><!-- /.footer-wrapper -->
 
 {% include scripts.html %}          
-
 </body>
 </html>

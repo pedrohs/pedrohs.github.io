@@ -15,15 +15,15 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
 <meta property="og:title" content="About the Jekyll Theme">
-<meta property="og:url" content="https://pedrohs.github.io/about/index.html">
+<meta property="og:url" content="/about/index.html">
 <meta property="og:site_name" content="Pedro HS">
 
 
 
 
 
-<link rel="canonical" href="https://pedrohs.github.io/about/">
-<link href="https://pedrohs.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Pedro HS Feed">
+<link rel="canonical" href="/about/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Pedro HS Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -31,49 +31,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://pedrohs.github.io/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/main.css">
 <!-- Webfonts -->
 <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
 
 <meta http-equiv="cleartype" content="on">
 
 <!-- Load Modernizr -->
-<script src="https://pedrohs.github.io/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
 
 <!-- Icons -->
 <!-- 16x16 -->
-<link rel="shortcut icon" href="https://pedrohs.github.io/favicon.ico">
+<link rel="shortcut icon" href="/favicon.ico">
 <!-- 32x32 -->
-<link rel="shortcut icon" href="https://pedrohs.github.io/favicon.png">
+<link rel="shortcut icon" href="/favicon.png">
 <!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
-<link rel="apple-touch-icon-precomposed" href="https://pedrohs.github.io/images/apple-touch-icon-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
 <!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://pedrohs.github.io/images/apple-touch-icon-72x72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
 <!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://pedrohs.github.io/images/apple-touch-icon-114x114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
 <!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://pedrohs.github.io/images/apple-touch-icon-144x144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 
 
 </head>
 
-<body id="page" class="feature">
+<body ng-app="App" ng-controller="menuCtrl" id="page" class="feature">
 
 <!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
 <nav id="dl-menu" class="dl-menuwrapper" role="navigation">
 	<button class="dl-trigger">Abrir Menu</button>
 	<ul class="dl-menu">
-		<li><a href="https://pedrohs.github.io/">Inicio</a></li>
+		<li><a href="/">Inicio</a></li>
+		<li><a href="" ng-click="modalPesq()">Pesquisar</a></li>
 		<li>
 			<a href="#">Sobre</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="https://pedrohs.github.io/images/avatar.jpg" alt="Pedro Henrique photo" class="author-photo">
+					<img src="/images/avatar.jpg" alt="Pedro Henrique photo" class="author-photo">
 					<h4>Pedro Henrique</h4>
 					<p>Bem-vindo meu nome é Pedro Henrique, e neste blog vou dar algumas dicas e tutoriais sobre node.js para arduino, então fiquem ligados</p>
 				</li>
-				<li><a href="https://pedrohs.github.io/about/"><span class="btn btn-inverse">Saber Mais</span></a></li>
+				<li><a href="/about/"><span class="btn btn-inverse">Saber Mais</span></a></li>
 				<li>
 					<a href="mailto:9.pedro.deoliveira@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
 				</li>
@@ -93,8 +94,8 @@
 		<li>
 			<a href="#">Postagens</a>
 			<ul class="dl-submenu">
-				<li><a href="https://pedrohs.github.io/posts/">Todas Postagens</a></li>
-				<li><a href="https://pedrohs.github.io/tags/">Todas Tags</a></li>
+				<li><a href="/posts/">Todas Postagens</a></li>
+				<li><a href="/tags/">Todas Tags</a></li>
 			</ul>
 		</li>
 		
@@ -103,10 +104,11 @@
 
 
 
+
 <div class="entry-header">
   <div class="image-credit">Image source: <a href="http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
   <div class="entry-image">
-    <img src="https://pedrohs.github.io/images/abstract-5.jpg" alt="About the Jekyll Theme">
+    <img src="/images/abstract-5.jpg" alt="About the Jekyll Theme">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -144,11 +146,11 @@
   <li>Optional <a href="http://disqus.com">Disqus</a> comments.</li>
   <li>Simple and clear permalink structure<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>.</li>
   <li><a href="https://developers.facebook.com/docs/opengraph/">Open Graph</a> and <a href="https://dev.twitter.com/docs/cards">Twitter Cards</a> support for a better social sharing experience.</li>
-  <li>Simple <a href="https://pedrohs.github.io/404.html">custom 404 page</a> to get you started.</li>
-  <li>Stylesheets for Pygments and Coderay <a href="https://pedrohs.github.io/code-highlighting-post/">syntax highlighting</a> to make your code examples look snazzy.</li>
+  <li>Simple <a href="/404.html">custom 404 page</a> to get you started.</li>
+  <li>Stylesheets for Pygments and Coderay <a href="/code-highlighting-post/">syntax highlighting</a> to make your code examples look snazzy.</li>
 </ul>
 
-<div><a href="https://pedrohs.github.io/theme-setup/" class="btn btn-info">Theme Setup</a> <a href="https://github.com/mmistakes/hpstr-jekyll-theme" class="btn btn-success">Download HPSTR</a></div>
+<div><a href="/theme-setup/" class="btn btn-info">Theme Setup</a> <a href="https://github.com/mmistakes/hpstr-jekyll-theme" class="btn btn-success">Download HPSTR</a></div>
 
 <div class="footnotes">
   <ol>
@@ -163,9 +165,9 @@
         <span class="author vcard"><span class="fn">Pedro Henrique</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=https://pedrohs.github.io/about/index.html" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=https://pedrohs.github.io/about/index.html" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=https://pedrohs.github.io/about/index.html" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=/about/index.html" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=/about/index.html" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=/about/index.html" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
       </footer>
@@ -177,12 +179,32 @@
 <div class="footer-wrapper">
   <footer role="contentinfo">
     <span>&copy; 2015 Pedro Henrique. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/hpstr/" rel="notfollow">HPSTR Theme</a>.</span>
+
+<div ng-class="{'modalHide': !modalView}">
+	<div id="modalPesq">
+		<a ng-click="modalPesq()" id="modalClose"><img src="/assets/icons/close.png"></a>
+		<h1>O que você está procurando?</h1>
+		<input type="text" class="form-control" ng-model="inputPesq" placeholder="Digite aqui o'que deseja procurar.">
+		<div ng-show="inputPesq" id="resultados">
+			<p>Resultados para <strong>//inputPesq//</strong>:</p>
+			<div dir-paginate="result in resultados | filter: inputPesq| itemsPerPage: 4">
+				<a href="//result.link//"><h1>//result.title//</h1></a>
+				<h4>Postado em: //result.date// </h4>
+			</div>
+
+			<dir-pagination-controls></dir-pagination-controls>
+		</div>
+	</div>
+</div>
   </footer>
 </div><!-- /.footer-wrapper -->
 
+<script src="/assets/js/angular.js"></script>
+<script src="/assets/js/directivas/dirPagination.js"></script>
+<script src="/assets/js/controllers/menuctrl.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="https://pedrohs.github.io/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="https://pedrohs.github.io/assets/js/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
 
 
 <!-- Asynchronous Google Analytics snippet -->
@@ -195,6 +217,28 @@
   ga('create', 'UA-59808784-1', 'auto');  
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
+</script>
+<script>
+	$(document).ready(function(){
+
+		responseModal();
+
+		$(window).resize(function(){
+			responseModal();
+		});
+
+		function responseModal(){
+			var larguraTela = $(window).width();
+ 			if(larguraTela >= 768){
+ 				var larguraModal = $('#modalPesq').width();
+ 				var valorModal = larguraModal / 2;
+ 				valorModal = valorModal * -1;
+ 				$("#modalPesq").css({marginLeft: valorModal});
+ 			}else{
+ 				$("#modalPesq").css({marginLeft: 0});
+ 			}
+		}		
+	});
 </script>
 
 

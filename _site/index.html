@@ -15,15 +15,15 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ultimas Postagens">
-<meta property="og:url" content="https://pedrohs.github.io/index.html">
+<meta property="og:url" content="/index.html">
 <meta property="og:site_name" content="Pedro HS">
 
 
 
 
 
-<link rel="canonical" href="https://pedrohs.github.io/">
-<link href="https://pedrohs.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Pedro HS Feed">
+<link rel="canonical" href="/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Pedro HS Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -31,49 +31,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://pedrohs.github.io/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/main.css">
 <!-- Webfonts -->
 <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
 
 <meta http-equiv="cleartype" content="on">
 
 <!-- Load Modernizr -->
-<script src="https://pedrohs.github.io/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
 
 <!-- Icons -->
 <!-- 16x16 -->
-<link rel="shortcut icon" href="https://pedrohs.github.io/favicon.ico">
+<link rel="shortcut icon" href="/favicon.ico">
 <!-- 32x32 -->
-<link rel="shortcut icon" href="https://pedrohs.github.io/favicon.png">
+<link rel="shortcut icon" href="/favicon.png">
 <!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
-<link rel="apple-touch-icon-precomposed" href="https://pedrohs.github.io/images/apple-touch-icon-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
 <!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://pedrohs.github.io/images/apple-touch-icon-72x72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
 <!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://pedrohs.github.io/images/apple-touch-icon-114x114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
 <!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://pedrohs.github.io/images/apple-touch-icon-144x144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 
 
 </head>
 
-<body id="post-index" class="feature">
+<body ng-app="App" ng-controller="menuCtrl" id="post-index" class="feature">
 
 <!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
 <nav id="dl-menu" class="dl-menuwrapper" role="navigation">
 	<button class="dl-trigger">Abrir Menu</button>
 	<ul class="dl-menu">
-		<li><a href="https://pedrohs.github.io/">Inicio</a></li>
+		<li><a href="/">Inicio</a></li>
+		<li><a href="" ng-click="modalPesq()">Pesquisar</a></li>
 		<li>
 			<a href="#">Sobre</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="https://pedrohs.github.io/images/avatar.jpg" alt="Pedro Henrique photo" class="author-photo">
+					<img src="/images/avatar.jpg" alt="Pedro Henrique photo" class="author-photo">
 					<h4>Pedro Henrique</h4>
 					<p>Bem-vindo meu nome é Pedro Henrique, e neste blog vou dar algumas dicas e tutoriais sobre node.js para arduino, então fiquem ligados</p>
 				</li>
-				<li><a href="https://pedrohs.github.io/about/"><span class="btn btn-inverse">Saber Mais</span></a></li>
+				<li><a href="/about/"><span class="btn btn-inverse">Saber Mais</span></a></li>
 				<li>
 					<a href="mailto:9.pedro.deoliveira@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
 				</li>
@@ -93,8 +94,8 @@
 		<li>
 			<a href="#">Postagens</a>
 			<ul class="dl-submenu">
-				<li><a href="https://pedrohs.github.io/posts/">Todas Postagens</a></li>
-				<li><a href="https://pedrohs.github.io/tags/">Todas Tags</a></li>
+				<li><a href="/posts/">Todas Postagens</a></li>
+				<li><a href="/tags/">Todas Tags</a></li>
 			</ul>
 		</li>
 		
@@ -102,11 +103,12 @@
 </nav><!-- /.dl-menuwrapper -->
 
 
+
 <div class="entry-header">
   
   
     <div class="entry-image">
-      <img src="https://pedrohs.github.io/images/background.jpg" alt="Ultimas Postagens">
+      <img src="/images/background.jpg" alt="Ultimas Postagens">
     </div><!-- /.entry-image -->
   
   <div class="header-title">
@@ -123,11 +125,11 @@
   <header>
     
       <div class="entry-image-index">
-        <a href="https://pedrohs.github.io/utilizando-lcd-com-nodejs/" title="Controlando LCD com Node.js e Arduíno"><img src="https://pedrohs.github.io/images/arduino.jpg" alt="Controlando LCD com Node.js e Arduíno"></a>
+        <a href="/utilizando-lcd-com-nodejs/" title="Controlando LCD com Node.js e Arduíno"><img src="/images/arduino.jpg" alt="Controlando LCD com Node.js e Arduíno"></a>
       </div><!-- /.entry-image -->
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-02-19T10:08:11-02:00"><a href="https://pedrohs.github.io/utilizando-lcd-com-nodejs/">February 19, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="https://pedrohs.github.io/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2015-02-19T10:08:11-02:00"><a href="/utilizando-lcd-com-nodejs/">February 19, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -137,7 +139,7 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="https://pedrohs.github.io/utilizando-lcd-com-nodejs/" rel="bookmark" title="Controlando LCD com Node.js e Arduíno" itemprop="url">Controlando LCD com Node.js e Arduíno</a></h1>
+      <h1 class="entry-title"><a href="/utilizando-lcd-com-nodejs/" rel="bookmark" title="Controlando LCD com Node.js e Arduíno" itemprop="url">Controlando LCD com Node.js e Arduíno</a></h1>
     
   </header>
   <div class="entry-content">
@@ -152,11 +154,11 @@
   <header>
     
       <div class="entry-image-index">
-        <a href="https://pedrohs.github.io/barra-de-leds-com-potenciometro/" title="Barra de leds com potenciômetro utilizando Node.js e Arduíno"><img src="https://pedrohs.github.io/images/arduino.jpg" alt="Barra de leds com potenciômetro utilizando Node.js e Arduíno"></a>
+        <a href="/barra-de-leds-com-potenciometro/" title="Barra de leds com potenciômetro utilizando Node.js e Arduíno"><img src="/images/arduino.jpg" alt="Barra de leds com potenciômetro utilizando Node.js e Arduíno"></a>
       </div><!-- /.entry-image -->
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-02-18T07:14:23-02:00"><a href="https://pedrohs.github.io/barra-de-leds-com-potenciometro/">February 18, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="https://pedrohs.github.io/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2015-02-18T07:14:23-02:00"><a href="/barra-de-leds-com-potenciometro/">February 18, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -166,7 +168,7 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="https://pedrohs.github.io/barra-de-leds-com-potenciometro/" rel="bookmark" title="Barra de leds com potenciômetro utilizando Node.js e Arduíno" itemprop="url">Barra de leds com potenciômetro utilizando Node.js e Arduíno</a></h1>
+      <h1 class="entry-title"><a href="/barra-de-leds-com-potenciometro/" rel="bookmark" title="Barra de leds com potenciômetro utilizando Node.js e Arduíno" itemprop="url">Barra de leds com potenciômetro utilizando Node.js e Arduíno</a></h1>
     
   </header>
   <div class="entry-content">
@@ -181,11 +183,11 @@
   <header>
     
       <div class="entry-image-index">
-        <a href="https://pedrohs.github.io/controlando-led-com-botao/" title="Controlando led utilizando botão com Node.js e Arduíno"><img src="https://pedrohs.github.io/images/arduino.jpg" alt="Controlando led utilizando botão com Node.js e Arduíno"></a>
+        <a href="/controlando-led-com-botao/" title="Controlando led utilizando botão com Node.js e Arduíno"><img src="/images/arduino.jpg" alt="Controlando led utilizando botão com Node.js e Arduíno"></a>
       </div><!-- /.entry-image -->
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-02-17T09:12:51-02:00"><a href="https://pedrohs.github.io/controlando-led-com-botao/">February 17, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="https://pedrohs.github.io/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2015-02-17T09:12:51-02:00"><a href="/controlando-led-com-botao/">February 17, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -195,7 +197,7 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="https://pedrohs.github.io/controlando-led-com-botao/" rel="bookmark" title="Controlando led utilizando botão com Node.js e Arduíno" itemprop="url">Controlando led utilizando botão com Node.js e Arduíno</a></h1>
+      <h1 class="entry-title"><a href="/controlando-led-com-botao/" rel="bookmark" title="Controlando led utilizando botão com Node.js e Arduíno" itemprop="url">Controlando led utilizando botão com Node.js e Arduíno</a></h1>
     
   </header>
   <div class="entry-content">
@@ -210,11 +212,11 @@
   <header>
     
       <div class="entry-image-index">
-        <a href="https://pedrohs.github.io/lendo-potenciometro/" title="Lendo potenciômetro com Node.js e Arduíno"><img src="https://pedrohs.github.io/images/arduino.jpg" alt="Lendo potenciômetro com Node.js e Arduíno"></a>
+        <a href="/lendo-potenciometro/" title="Lendo potenciômetro com Node.js e Arduíno"><img src="/images/arduino.jpg" alt="Lendo potenciômetro com Node.js e Arduíno"></a>
       </div><!-- /.entry-image -->
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-02-16T13:11:24-02:00"><a href="https://pedrohs.github.io/lendo-potenciometro/">February 16, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="https://pedrohs.github.io/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2015-02-16T13:11:24-02:00"><a href="/lendo-potenciometro/">February 16, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -224,7 +226,7 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="https://pedrohs.github.io/lendo-potenciometro/" rel="bookmark" title="Lendo potenciômetro com Node.js e Arduíno" itemprop="url">Lendo potenciômetro com Node.js e Arduíno</a></h1>
+      <h1 class="entry-title"><a href="/lendo-potenciometro/" rel="bookmark" title="Lendo potenciômetro com Node.js e Arduíno" itemprop="url">Lendo potenciômetro com Node.js e Arduíno</a></h1>
     
   </header>
   <div class="entry-content">
@@ -239,11 +241,11 @@
   <header>
     
       <div class="entry-image-index">
-        <a href="https://pedrohs.github.io/piscando-led-com-node.js-e-arduino/" title="Piscando led com Node.js e Arduino"><img src="https://pedrohs.github.io/images/arduino.jpg" alt="Piscando led com Node.js e Arduino"></a>
+        <a href="/piscando-led-com-node.js-e-arduino/" title="Piscando led com Node.js e Arduino"><img src="/images/arduino.jpg" alt="Piscando led com Node.js e Arduino"></a>
       </div><!-- /.entry-image -->
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-02-15T16:08:20-02:00"><a href="https://pedrohs.github.io/piscando-led-com-node.js-e-arduino/">February 15, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="https://pedrohs.github.io/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2015-02-15T16:08:20-02:00"><a href="/piscando-led-com-node.js-e-arduino/">February 15, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="/about/" title="About Pedro Henrique">Pedro Henrique</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -253,7 +255,7 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="https://pedrohs.github.io/piscando-led-com-node.js-e-arduino/" rel="bookmark" title="Piscando led com Node.js e Arduino" itemprop="url">Piscando led com Node.js e Arduino</a></h1>
+      <h1 class="entry-title"><a href="/piscando-led-com-node.js-e-arduino/" rel="bookmark" title="Piscando led com Node.js e Arduino" itemprop="url">Piscando led com Node.js e Arduino</a></h1>
     
   </header>
   <div class="entry-content">
@@ -278,13 +280,13 @@
     
       <li>
         
-          <a href="https://pedrohs.github.io/page2">2</a>
+          <a href="/page2">2</a>
         
       </li>
     
   </ul>
   
-    <a href="https://pedrohs.github.io/page2" class="btn">PróximoNext</a>
+    <a href="/page2" class="btn">PróximoNext</a>
   
 </div><!-- /.pagination -->
 </div><!-- /#main -->
@@ -292,12 +294,32 @@
 <div class="footer-wrapper">
   <footer role="contentinfo">
     <span>&copy; 2015 Pedro Henrique. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/hpstr/" rel="notfollow">HPSTR Theme</a>.</span>
+
+<div ng-class="{'modalHide': !modalView}">
+	<div id="modalPesq">
+		<a ng-click="modalPesq()" id="modalClose"><img src="/assets/icons/close.png"></a>
+		<h1>O que você está procurando?</h1>
+		<input type="text" class="form-control" ng-model="inputPesq" placeholder="Digite aqui o'que deseja procurar.">
+		<div ng-show="inputPesq" id="resultados">
+			<p>Resultados para <strong>//inputPesq//</strong>:</p>
+			<div dir-paginate="result in resultados | filter: inputPesq| itemsPerPage: 4">
+				<a href="//result.link//"><h1>//result.title//</h1></a>
+				<h4>Postado em: //result.date// </h4>
+			</div>
+
+			<dir-pagination-controls></dir-pagination-controls>
+		</div>
+	</div>
+</div>
   </footer>
 </div><!-- /.footer-wrapper -->
 
+<script src="/assets/js/angular.js"></script>
+<script src="/assets/js/directivas/dirPagination.js"></script>
+<script src="/assets/js/controllers/menuctrl.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="https://pedrohs.github.io/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="https://pedrohs.github.io/assets/js/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
 
 
 <!-- Asynchronous Google Analytics snippet -->
@@ -311,9 +333,30 @@
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
 </script>
+<script>
+	$(document).ready(function(){
+
+		responseModal();
+
+		$(window).resize(function(){
+			responseModal();
+		});
+
+		function responseModal(){
+			var larguraTela = $(window).width();
+ 			if(larguraTela >= 768){
+ 				var larguraModal = $('#modalPesq').width();
+ 				var valorModal = larguraModal / 2;
+ 				valorModal = valorModal * -1;
+ 				$("#modalPesq").css({marginLeft: valorModal});
+ 			}else{
+ 				$("#modalPesq").css({marginLeft: 0});
+ 			}
+		}		
+	});
+</script>
 
 
           
-
 </body>
 </html>

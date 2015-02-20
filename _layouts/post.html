@@ -10,7 +10,7 @@
 <meta property="og:image:type" content="image/jpeg">
 </head>
 
-<body id="post" {% if page.image.feature %}class="feature"{% endif %}>
+<body ng-app="App" ng-controller="menuCtrl" id="post" {% if page.image.feature %}class="feature"{% endif %}>
 
 {% include browser-upgrade.html %}
 {% include navigation.html %}
