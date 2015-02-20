@@ -65,7 +65,7 @@
 	<button class="dl-trigger">Abrir Menu</button>
 	<ul class="dl-menu">
 		<li><a href="/">Inicio</a></li>
-		<li><a href="" ng-click="modalPesq()">Pesquisar</a></li>
+		<li><a href="" ng-click="modalPesq()" on-click="responseModal()">Pesquisar</a></li>
 		<li>
 			<a href="#">Sobre</a>
 			<ul class="dl-submenu">
@@ -180,7 +180,7 @@
   <footer role="contentinfo">
     <span>&copy; 2015 Pedro Henrique. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/hpstr/" rel="notfollow">HPSTR Theme</a>.</span>
 
-<div ng-class="{'modalHide': !modalView}">
+<div id="modalContent" ng-class="{'modalShow': modalView}">
 	<div id="modalPesq">
 		<a ng-click="modalPesq()" id="modalClose"><img src="/assets/icons/close.png"></a>
 		<h1>O que você está procurando?</h1>

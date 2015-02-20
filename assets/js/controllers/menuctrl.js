@@ -6,7 +6,7 @@ app.config(function($interpolateProvider){
 });
 
 app.config(function(paginationTemplateProvider){
-	paginationTemplateProvider.setPath("https://pedrohs.github.io/assets/js/directivas/html/dirPagination.tpl.html");
+	paginationTemplateProvider.setPath("http://localhost:4000/assets/js/directivas/html/dirPagination.tpl.html");
 });
 
 app.controller('menuCtrl', function($scope, $http){

@@ -61,19 +61,22 @@ body {
 		color: lighten($base-color,20);
 	}
 }
-.modalHide {
+.modalShow{
+	visibility: visible !important;
+}
+#modalContent{
 	visibility: hidden;
 }
 #modalPesq {
 	position: fixed;
 	max-width: 800px;
+	display: block;
 	background-color: $white;
 	border:1px solid #DDDDDD;
 	padding: 15px;
 	box-sizing: border-box;
 	border-radius: 2px;
 	z-index: 999;
-	display: block;
 	top: 10%;
 	box-shadow: 0 0 0 0,0 6px 12px rgba(34,34,34,0.1);
 	@media #{$small} {
