@@ -1,8 +1,8 @@
 var app = angular.module('App', ['angularUtils.directives.dirPagination']);
 
 app.config(function($interpolateProvider){
-	$interpolateProvider.startSymbol('//');
-    $interpolateProvider.endSymbol('//');
+	$interpolateProvider.startSymbol('||');
+    $interpolateProvider.endSymbol('||');
 });
 
 app.controller('menuCtrl', function($scope, $http){

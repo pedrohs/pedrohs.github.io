@@ -4,10 +4,10 @@
 		<h1>O que você está procurando?</h1>
 		<input type="text" class="form-control" ng-model="inputPesq" placeholder="Digite aqui o'que deseja procurar.">
 		<div ng-show="inputPesq" id="resultados">
-			<p>Resultados para <strong>//inputPesq//</strong>:</p>
+			<p>Resultados para <strong>||inputPesq||</strong>:</p>
 			<div dir-paginate="result in resultados | filter: inputPesq| itemsPerPage: 3">
-				<a href="//result.link//"><h1>//result.title//</h1></a>
-				<h4>Postado em: //result.date// </h4>
+				<a href="||result.link||"><h1>||result.title||</h1></a>
+				<h4>Postado em: ||result.date|| </h4>
 			</div>
 
 			<dir-pagination-controls template-url="{{site.url}}/assets/js/directivas/html/dirPagination.tpl.html"></dir-pagination-controls>
