@@ -65,8 +65,13 @@ body {
 	width: 100%;
 	height: 100%;
 	-webkit-backface-visibility: hidden;
-	position: fixed;
 	top: 0;
+	@media #{$small}{
+		position: absolute;
+	}
+	@media #{$medium}{
+		position: fixed;
+	}
 }
 #modalPesq {
 	max-width: 800px;
