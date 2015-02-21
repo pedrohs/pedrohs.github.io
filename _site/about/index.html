@@ -180,19 +180,19 @@
   <footer role="contentinfo">
     <span>&copy; 2015 Pedro Henrique. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/hpstr/" rel="notfollow">HPSTR Theme</a>.</span>
 
-<div id="modalContent" ng-class="{'modalShow': modalView}">
+<div id="modalContent" ng-show="modalView">
 	<div id="modalPesq">
 		<a ng-click="modalPesq()" id="modalClose"><img src="/assets/icons/close.png"></a>
 		<h1>O que você está procurando?</h1>
 		<input type="text" class="form-control" ng-model="inputPesq" placeholder="Digite aqui o'que deseja procurar.">
 		<div ng-show="inputPesq" id="resultados">
 			<p>Resultados para <strong>//inputPesq//</strong>:</p>
-			<div dir-paginate="result in resultados | filter: inputPesq| itemsPerPage: 4">
+			<div dir-paginate="result in resultados | filter: inputPesq| itemsPerPage: 3">
 				<a href="//result.link//"><h1>//result.title//</h1></a>
 				<h4>Postado em: //result.date// </h4>
 			</div>
 
-			<dir-pagination-controls></dir-pagination-controls>
+			<dir-pagination-controls template-url="/assets/js/directivas/html/dirPagination.tpl.html"></dir-pagination-controls>
 		</div>
 	</div>
 </div>
@@ -217,28 +217,6 @@
   ga('create', 'UA-59808784-1', 'auto');  
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
-</script>
-<script>
-	$(document).ready(function(){
-
-		responseModal();
-
-		$(window).resize(function(){
-			responseModal();
-		});
-
-		function responseModal(){
-			var larguraTela = $(window).width();
- 			if(larguraTela >= 768){
- 				var larguraModal = $('#modalPesq').width();
- 				var valorModal = larguraModal / 2;
- 				valorModal = valorModal * -1;
- 				$("#modalPesq").css({marginLeft: valorModal});
- 			}else{
- 				$("#modalPesq").css({marginLeft: 0});
- 			}
-		}		
-	});
 </script>
 
 

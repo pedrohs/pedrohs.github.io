@@ -5,10 +5,6 @@ app.config(function($interpolateProvider){
     $interpolateProvider.endSymbol('//');
 });
 
-app.config(function(paginationTemplateProvider){
-	paginationTemplateProvider.setPath("https://pedrohs.github.io/assets/js/directivas/html/dirPagination.tpl.html");
-});
-
 app.controller('menuCtrl', function($scope, $http){
 
 	$scope.modalView = false;

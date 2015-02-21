@@ -17,28 +17,6 @@
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
 </script>
-<script>
-	$(document).ready(function(){
-
-		responseModal();
-
-		$(window).resize(function(){
-			responseModal();
-		});
-
-		function responseModal(){
-			var larguraTela = $(window).width();
- 			if(larguraTela >= 768){
- 				var larguraModal = $('#modalPesq').width();
- 				var valorModal = larguraModal / 2;
- 				valorModal = valorModal * -1;
- 				$("#modalPesq").css({marginLeft: valorModal});
- 			}else{
- 				$("#modalPesq").css({marginLeft: 0});
- 			}
-		}		
-	});
-</script>
 {% endif %}
 
 {% if page.comments != false %}{% include disqus_comments.html %}{% endif %}
