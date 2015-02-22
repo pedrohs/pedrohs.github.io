@@ -133,9 +133,9 @@ function servidor(requisicao, resposta){
   if(url == '/'){
     resposta.writeHead(200);
     resposta.end(fs.readFileSync('view/index.html'));
-  }else if(url == '/ajuda'){
-    resposta.writeHead(200);
-    resposta.end("<h1>Ajuda</h1>");
+  }else if(url == '/contatos'){
+      resposta.writeHead(200);
+      resposta.end("<h1>Pagina Contatos</h1>");
   }else{
     resposta.writeHead(200);
     resposta.end("<h1>Error: 404, nada encontrado</h1>");
