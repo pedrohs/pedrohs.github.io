@@ -2,30 +2,176 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Pedro HS</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="/feed.xml" />
-<link rel="alternate" type="text/html" href="" />
-<updated>2015-02-21T11:45:23-02:00</updated>
-<id>/</id>
+<link rel="self" type="application/atom+xml" href="//pedrohs.github.io/feed.xml" />
+<link rel="alternate" type="text/html" href="//pedrohs.github.io" />
+<updated>2015-02-22T09:39:46-03:00</updated>
+<id>//pedrohs.github.io/</id>
 <author>
   <name>Pedro Henrique</name>
-  <uri>/</uri>
+  <uri>//pedrohs.github.io/</uri>
   <email>9.pedro.deoliveira@gmail.com</email>
 </author>
 
 
 <entry>
+  <title type="html"><![CDATA[Criando um servidor Http e rotas simples com Node.js]]></title>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/criando-servidor-http/" />
+  <id>//pedrohs.github.io/criando-servidor-http</id>
+  <published>2015-02-22T06:38:24-03:00</published>
+  <updated>2015-02-22T06:38:24-03:00</updated>
+  <author>
+    <name>Pedro Henrique</name>
+    <uri>//pedrohs.github.io</uri>
+    <email>9.pedro.deoliveira@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;Hoje vou mostrar a vocês a como criar um servidor Http com node.js para exibir um &lt;em&gt;html&lt;/em&gt;, vou ensinar isso a vocês pois nas próximas postagens vamos criar algumas paginas html que vão se comunicar com o Arduino via node.js, então se preparem!&lt;/p&gt;
+
+&lt;p&gt;Antes de tudo, vamos criar uma pasta aonde guardaremos o nosso projeto http, feito isso crie um arquivo com o nome de &lt;strong&gt;app.js&lt;/strong&gt;, abra ele com seu editor favorito e vamos aos códigos!&lt;/p&gt;
+
+&lt;p&gt;Primeiramente vamos definir o modulo &lt;strong&gt;http&lt;/strong&gt;, que não precisamos instalar ele pelo &lt;em&gt;npm&lt;/em&gt; pois o node.js já tem ele nativamente! então basta vc fazer o &lt;em&gt;require&lt;/em&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Para carregar o nosso arquivo html (que ainda vamos criar!) vamos usar um outro modulo nativo do Node.js chamado &lt;strong&gt;FS&lt;/strong&gt; (&lt;a href=&quot;http://nodejs.org/api/fs.html&quot;&gt;File System&lt;/a&gt;), então vamos chamalo:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;fs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;feito isso vamos criar uma função que vai ser o nosso servidor http:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;requisicao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;//código a seguir vai aqui dentro&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Toda vez que um navegador acessa nossa pagina é essa função que vai dizer o que fazer, para isso passamos o parâmetro &lt;strong&gt;requisicao&lt;/strong&gt; e &lt;strong&gt;resposta&lt;/strong&gt; a requisição é o pedido do navegador ao nosso servidor (por assim dizer) e a resposta é o que vamos responder ao navegador como no exemplo vamos responder com uma pagina html que vamos criar.
+Dentro dessa função precisamos primeiramente responder ao navegador que recebemos a requisição para isso:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;o numero &lt;em&gt;200&lt;/em&gt; é um código de status do http, que responde ao navegador que recebemos a requisição (você pode ver mais códigos aqui: http://httpstatus.es/)
+Feito isso precisamos responder ao navegador algum texto, html etc, no caso vamos responder um html, e para responder vamos usar o &lt;strong&gt;.end&lt;/strong&gt; e passando junto o html para isso:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;view/index.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Então definimos o &lt;strong&gt;.end&lt;/strong&gt; na resposta e dentro dela usamos o modulo &lt;strong&gt;FS&lt;/strong&gt; para carregar nosso html (não vou dar muito foco ao modulo &lt;strong&gt;FS&lt;/strong&gt;, mas caso vocês queiram aprender mais sobre ele recomendo essa postagem: &lt;a href=&quot;http://udgwebdev.com/node-js-para-leigos-utilizando-api-file-system/&quot;&gt;Node.js para leigos - Utilizando API File System&lt;/a&gt;).
+Com isso nossa função Servidor esta pronta, agora precisamos definir a porta e iniciar o servidor http, para isso existe o &lt;strong&gt;.listen&lt;/strong&gt;, vejamos como usar:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Servidor Online&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Definimos dentro de &lt;em&gt;listen&lt;/em&gt; a porta &lt;strong&gt;4000&lt;/strong&gt; e uma função para exibir no console a mensagem: &lt;em&gt;“Servidor Online”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;O &lt;strong&gt;app.js&lt;/strong&gt; deverá ficar assim:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fs&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;requisicao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;view/index.html&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Servidor On-line&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Feito isso nosso &lt;strong&gt;app.js&lt;/strong&gt; está pronto, vamos agora criar uma pasta com o nome de &lt;em&gt;view&lt;/em&gt; dentro do diretório do nosso projeto para guardar nosso html e ficar mais organizado, criada a pasta crie o arquivo &lt;strong&gt;index.html&lt;/strong&gt;, nele vamos escrever a estrutura básica de todo html:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Ola Mundo&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Ola Mundo :)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Aonde apenas defini o Titulo da pagina (title) e criei um &lt;strong&gt;h1&lt;/strong&gt; para mostrar a mensagem: &lt;em&gt;Ola Mundo :)&lt;/em&gt; criado o arquivo abra o seu &lt;strong&gt;terminal&lt;/strong&gt; ou &lt;strong&gt;prompt de comando&lt;/strong&gt; e execute o arquivo app.js:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node app.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Espere a mensagem &lt;em&gt;“Servidor Online”&lt;/em&gt; aparecer, em seguida abra seu navegador e digite: http://localhost:4000/ deverá aparecer o html com a mensagem &lt;em&gt;“Ola Mundo :)”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Isso acima é o básico para se criar um servidor http, para criar Rotas que é algo que será útil para a gente futuramente também é simples veja:&lt;/p&gt;
+
+&lt;p&gt;Dentro da função &lt;em&gt;servidor&lt;/em&gt; vamos criar uma variável &lt;em&gt;url&lt;/em&gt; que vai guardar em que url o navegador está requisitando:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requisicao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora precisamos criar IFs para determinar as rotas e oque o node.js deve fazer para cada uma, então:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requisicao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;view/index.html&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/contatos&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;h1&amp;gt;Pagina Contatos&amp;lt;/h1&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;h1&amp;gt;Error 404, Nada encontrado&amp;lt;/h1&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Então fizemos assim:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Se o usuário acessar “/” ou seja a index do nosso servidor mandamos o &lt;em&gt;“index.html”&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Se ele acessar “/contatos” vai ser enviado apenas um &lt;em&gt;h1&lt;/em&gt; informando &lt;em&gt;“Pagina Contatos”&lt;/em&gt; (mas pode ser enviado um html da mesma forma que fizemos na index! )&lt;/li&gt;
+  &lt;li&gt;Caso ele acesse alguma url não definida é mostrado um &lt;em&gt;h1&lt;/em&gt; informando: &lt;em&gt;Error 404, Nada encontrado”&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Fica assim o &lt;strong&gt;app.js&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fs&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;requisicao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requisicao&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;view/index.html&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/ajuda&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;h1&amp;gt;Ajuda&amp;lt;/h1&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resposta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;h1&amp;gt;Error: 404, nada encontrado&amp;lt;/h1&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Servidor On-line&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora para vermos essa maravilha funcionando abra seu &lt;strong&gt;terminal&lt;/strong&gt; ou &lt;strong&gt;prompt de comando&lt;/strong&gt; e:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node app.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Abra seu navegador e acesse: http://localhost:4000/ e vai testando as rotas.
+Por enquanto é só isso, você pode criar quantas rotas quiser, mas futuramente vou mostrar um modulo que faz o gerenciamento das rotas de forma mais simples e organizada, vejo vocês na próxima.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/criando-servidor-http/&quot;&gt;Criando um servidor Http e rotas simples com Node.js&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 22, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[Controlando LCD com Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="/utilizando-lcd-com-nodejs/" />
-  <id>/utilizando-lcd-com-nodejs</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/utilizando-lcd-com-nodejs/" />
+  <id>//pedrohs.github.io/utilizando-lcd-com-nodejs</id>
   <published>2015-02-19T10:08:11-02:00</published>
   <updated>2015-02-19T10:08:11-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
-    &lt;p&gt;Hoje vamos brincar um pouco com um LCD 16x2 (mas podem ser de outros tamanhos) utilizando o modulo &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;Johnny-Five&lt;/a&gt; que vocês já devem estar cansados de ouvir eu dizer isso rs, &lt;/p&gt;
+    &lt;p&gt;Hoje vamos brincar um pouco com um LCD 16x2 (mas podem ser de outros tamanhos) utilizando o modulo &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;Johnny-Five&lt;/a&gt; que vocês já devem estar cansados de ouvir eu dizer isso rs.&lt;/p&gt;
 
 &lt;p&gt;Como nas outras postagens precisamos antes de mais nada enviar o exemplo &lt;strong&gt;StandardFirmata&lt;/strong&gt; para isso abra a IDE do Arduíno e acesse &lt;strong&gt;Files &amp;gt; Examples &amp;gt; Firmata &amp;gt; StandardFirmata&lt;/strong&gt; em seguida clique em Upload. feito isso vamos montar nosso LCD na protoboard:&lt;/p&gt;
 
@@ -46,7 +192,7 @@
 &lt;p&gt;Definido os 2 precisamos saber quando o Arduíno estará pronto para receber os comandos, para isso:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ready&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;c1&quot;&gt;//todo o código a seguir vai aqui dentro! &lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;//todo o código a seguir vai aqui dentro!&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Feito isso vamos definir nosso lcd:&lt;/p&gt;
@@ -139,22 +285,22 @@ Exemplo, se você definir: &lt;strong&gt;&lt;em&gt;lcd.cursor(1,5)&lt;/em&gt;&lt
 
 &lt;p&gt;Irá aparecer a primeira frase, e depois de 5 segundos o lcd vai mostrar &lt;em&gt;“Ola Mundo”&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Molezinha? espero que tenham gostado, caso queiram aprender mais sobre johnny-five e LCD acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki/LCD&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;, vejo vocês na próxima. &lt;/p&gt;
+&lt;p&gt;Molezinha? espero que tenham gostado, caso queiram aprender mais sobre johnny-five e LCD acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki/LCD&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;, vejo vocês na próxima.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/utilizando-lcd-com-nodejs/&quot;&gt;Controlando LCD com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 19, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/utilizando-lcd-com-nodejs/&quot;&gt;Controlando LCD com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 19, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Barra de leds com potenciômetro utilizando Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="/barra-de-leds-com-potenciometro/" />
-  <id>/barra-de-leds-com-potenciometro</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/barra-de-leds-com-potenciometro/" />
+  <id>//pedrohs.github.io/barra-de-leds-com-potenciometro</id>
   <published>2015-02-18T07:14:23-02:00</published>
   <updated>2015-02-18T07:14:23-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -324,20 +470,20 @@ Veja como ficou o codigo completo:&lt;/p&gt;
 
 &lt;p&gt;Só lembrando caso queiram aprender mais sobre o modulo Johnny-Five exite a Wiki deles: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/barra-de-leds-com-potenciometro/&quot;&gt;Barra de leds com potenciômetro utilizando Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 18, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/barra-de-leds-com-potenciometro/&quot;&gt;Barra de leds com potenciômetro utilizando Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 18, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Controlando led utilizando botão com Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="/controlando-led-com-botao/" />
-  <id>/controlando-led-com-botao</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/controlando-led-com-botao/" />
+  <id>//pedrohs.github.io/controlando-led-com-botao</id>
   <published>2015-02-17T09:12:51-02:00</published>
   <updated>2015-02-17T09:12:51-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -427,20 +573,20 @@ Arduino pronto vamos montar na nossa protoboard o led e botão.
 
 &lt;p&gt;Viram como é simples? Caso queiram ver mais funções que podem fazer com o botão e o led acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-five Wiki&lt;/a&gt;, espero que tenham gostado se possível comente fale oque achou da postagem se encontrou algum erro etc, vejo vocês na próxima. &lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/controlando-led-com-botao/&quot;&gt;Controlando led utilizando botão com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 17, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/controlando-led-com-botao/&quot;&gt;Controlando led utilizando botão com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 17, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Lendo potenciômetro com Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="/lendo-potenciometro/" />
-  <id>/lendo-potenciometro</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/lendo-potenciometro/" />
+  <id>//pedrohs.github.io/lendo-potenciometro</id>
   <published>2015-02-16T13:11:24-02:00</published>
   <updated>2015-02-16T13:11:24-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -519,20 +665,20 @@ Feito isso crie uma pasta aonde preferir para salvar seu projeto, abra o &lt;str
 
 &lt;p&gt;Opa aqui vai uma dica, caso você queira aprender muito mais sobre o modulo johnny-five basta acessar a Wiki deles: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;  tem vários exemplos lá. &lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 16, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 16, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Piscando led com Node.js e Arduino]]></title>
- <link rel="alternate" type="text/html" href="/piscando-led-com-node.js-e-arduino/" />
-  <id>/piscando-led-com-node.js-e-arduino</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/piscando-led-com-node.js-e-arduino/" />
+  <id>//pedrohs.github.io/piscando-led-com-node.js-e-arduino</id>
   <published>2015-02-15T16:08:20-02:00</published>
   <updated>2015-02-15T16:08:20-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -585,20 +731,20 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
 
 &lt;p&gt;Aguardem ate a mensagem &lt;strong&gt;“Arduino Pronto”&lt;/strong&gt; e o led começara a piscar, Facil não? :) Espero que tenham gostado do post, tentei explicar ao máximo, caso encontrarem algum erro comentem! Aguardem novas postagens.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/piscando-led-com-node.js-e-arduino/&quot;&gt;Piscando led com Node.js e Arduino&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/piscando-led-com-node.js-e-arduino/&quot;&gt;Piscando led com Node.js e Arduino&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Node.JS, Instalação e mais umas coisinhas]]></title>
- <link rel="alternate" type="text/html" href="/instala%C3%A7%C3%A3o-nodejs/" />
-  <id>/instalação-nodejs</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/instala%C3%A7%C3%A3o-nodejs/" />
+  <id>//pedrohs.github.io/instalação-nodejs</id>
   <published>2015-02-15T11:55:42-02:00</published>
   <updated>2015-02-15T11:55:42-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -636,20 +782,20 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
 
 &lt;p&gt;Acho que é só isso, nos próximos posts vamos brincar um pouco com node.js e Arduino. Nos vemos em breve. &lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/instala%C3%A7%C3%A3o-nodejs/&quot;&gt;Node.JS, Instalação e mais umas coisinhas&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/instala%C3%A7%C3%A3o-nodejs/&quot;&gt;Node.JS, Instalação e mais umas coisinhas&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Primeira Postagem - Welcome!]]></title>
- <link rel="alternate" type="text/html" href="/primeiro-post/" />
-  <id>/primeiro-post</id>
+ <link rel="alternate" type="text/html" href="//pedrohs.github.io/primeiro-post/" />
+  <id>//pedrohs.github.io/primeiro-post</id>
   <published>2015-02-15T08:31:00-02:00</published>
   <updated>2015-02-15T08:31:00-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri></uri>
+    <uri>//pedrohs.github.io</uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -660,7 +806,7 @@ Criei este blog para poder compartilhar o pouco que sei sobre programação, nã
 
 &lt;p&gt;&lt;em&gt;Sejam bem-vindos&lt;/em&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;/primeiro-post/&quot;&gt;Primeira Postagem - Welcome!&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/primeiro-post/&quot;&gt;Primeira Postagem - Welcome!&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
 </entry>
 

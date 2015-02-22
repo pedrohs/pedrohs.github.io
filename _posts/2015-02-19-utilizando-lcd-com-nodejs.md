@@ -2,12 +2,12 @@
 layout: post
 title: Controlando LCD com Node.js e Arduíno
 date: 2015-02-19 12:08:11
-description:
+description: Hoje vamos brincar um pouco com um LCD 16x2 (mas podem ser de outros tamanhos) utilizando o modulo Johnny-Five que vocês já devem estar cansados de ouvir eu dizer isso rs
 tags: [nodejs, arduino]
 image:
   feature: arduino.jpg
 ---
-Hoje vamos brincar um pouco com um LCD 16x2 (mas podem ser de outros tamanhos) utilizando o modulo [Johnny-Five](https://github.com/rwaldron/johnny-five/) que vocês já devem estar cansados de ouvir eu dizer isso rs, 
+Hoje vamos brincar um pouco com um LCD 16x2 (mas podem ser de outros tamanhos) utilizando o modulo [Johnny-Five](https://github.com/rwaldron/johnny-five/) que vocês já devem estar cansados de ouvir eu dizer isso rs.
 
 Como nas outras postagens precisamos antes de mais nada enviar o exemplo **StandardFirmata** para isso abra a IDE do Arduíno e acesse **Files > Examples > Firmata > StandardFirmata** em seguida clique em Upload. feito isso vamos montar nosso LCD na protoboard:
 
@@ -16,7 +16,7 @@ Como nas outras postagens precisamos antes de mais nada enviar o exemplo **Stand
 Feita a ligação vamos criar uma pasta para salvar nosso projeto, agora instale o *johnny-five*:
 
     npm install johnny-five
- 
+
 Instalado o modulo, crie um arquivo chamado ***app.js*** nele vamos escrever nosso código:
 
 Vamos definir o modulo johnny-five e Arduíno:
@@ -30,7 +30,7 @@ Definido os 2 precisamos saber quando o Arduíno estará pronto para receber os 
 
 {% highlight javascript %}
 arduino.on('ready', function(){
-	//todo o código a seguir vai aqui dentro! 
+	//todo o código a seguir vai aqui dentro!
 });
 {% endhighlight %}
 
@@ -56,7 +56,7 @@ Simples né?, vamos agora exibir a segunda linha, mas se fizermos da mesma forma
 {% highlight javascript %}
 lcd.cursor(1,0);
 {% endhighlight %}
- 
+
 Ele funciona da seguinte maneira: **.cursor(linha, coluna)** se queremos pular para a segunda linha definimos: **.cursor(1,0)** se o seu lcd tem suporte a mais de 2 linhas e você quer pular 2,3 linhas basta alterar o **.cursor(linha, coluna)** agora se você quer deixar espaços antes de uma palavra basta alterar o parâmetro *"coluna"* do **.cursor()**.
 Exemplo, se você definir: ***lcd.cursor(1,5)*** o lcd vai exibir a frase na segunda linha e o texto só vai começar depois de **5** casas. mas enfim precisamos apenas exibir na segunda linha *"Ola Johnny-five"*para isso:
 
@@ -95,7 +95,7 @@ arduino.on("ready", function(){
 abra o **terminal** ou **prompt de comando** e digite:
 
     node app.js
-    
+
 E verá o lcd funcionando, mas que tal fazermos uma transição simples? no fim do código vamos adicionar um ***setTimeout()*** que vai executar um bloco de códigos depois de 5 segundos, então fazemos:
 
 {% highlight javascript %}
@@ -136,4 +136,4 @@ Agora basta executar no **terminal** ou **prompt**:
 
 Irá aparecer a primeira frase, e depois de 5 segundos o lcd vai mostrar *"Ola Mundo"*
 
-Molezinha? espero que tenham gostado, caso queiram aprender mais sobre johnny-five e LCD acessem: [Johnny-Five - Wiki](https://github.com/rwaldron/johnny-five/wiki/LCD), vejo vocês na próxima. 
+Molezinha? espero que tenham gostado, caso queiram aprender mais sobre johnny-five e LCD acessem: [Johnny-Five - Wiki](https://github.com/rwaldron/johnny-five/wiki/LCD), vejo vocês na próxima.
