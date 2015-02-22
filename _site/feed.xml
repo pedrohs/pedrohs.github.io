@@ -2,26 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Pedro HS</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="//pedrohs.github.io/feed.xml" />
-<link rel="alternate" type="text/html" href="//pedrohs.github.io" />
-<updated>2015-02-22T09:39:46-03:00</updated>
-<id>//pedrohs.github.io/</id>
+<link rel="self" type="application/atom+xml" href="/feed.xml" />
+<link rel="alternate" type="text/html" href="" />
+<updated>2015-02-22T10:11:25-03:00</updated>
+<id>/</id>
 <author>
   <name>Pedro Henrique</name>
-  <uri>//pedrohs.github.io/</uri>
+  <uri>/</uri>
   <email>9.pedro.deoliveira@gmail.com</email>
 </author>
 
 
 <entry>
   <title type="html"><![CDATA[Criando um servidor Http e rotas simples com Node.js]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/criando-servidor-http/" />
-  <id>//pedrohs.github.io/criando-servidor-http</id>
+ <link rel="alternate" type="text/html" href="/criando-servidor-http/" />
+  <id>/criando-servidor-http</id>
   <published>2015-02-22T06:38:24-03:00</published>
   <updated>2015-02-22T06:38:24-03:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -154,20 +154,20 @@ Com isso nossa função Servidor esta pronta, agora precisamos definir a porta e
 &lt;p&gt;Abra seu navegador e acesse: http://localhost:4000/ e vai testando as rotas.
 Por enquanto é só isso, você pode criar quantas rotas quiser, mas futuramente vou mostrar um modulo que faz o gerenciamento das rotas de forma mais simples e organizada, vejo vocês na próxima.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/criando-servidor-http/&quot;&gt;Criando um servidor Http e rotas simples com Node.js&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 22, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/criando-servidor-http/&quot;&gt;Criando um servidor Http e rotas simples com Node.js&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 22, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Controlando LCD com Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/utilizando-lcd-com-nodejs/" />
-  <id>//pedrohs.github.io/utilizando-lcd-com-nodejs</id>
+ <link rel="alternate" type="text/html" href="/utilizando-lcd-com-nodejs/" />
+  <id>/utilizando-lcd-com-nodejs</id>
   <published>2015-02-19T10:08:11-02:00</published>
   <updated>2015-02-19T10:08:11-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -287,20 +287,20 @@ Exemplo, se você definir: &lt;strong&gt;&lt;em&gt;lcd.cursor(1,5)&lt;/em&gt;&lt
 
 &lt;p&gt;Molezinha? espero que tenham gostado, caso queiram aprender mais sobre johnny-five e LCD acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki/LCD&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;, vejo vocês na próxima.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/utilizando-lcd-com-nodejs/&quot;&gt;Controlando LCD com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 19, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/utilizando-lcd-com-nodejs/&quot;&gt;Controlando LCD com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 19, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Barra de leds com potenciômetro utilizando Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/barra-de-leds-com-potenciometro/" />
-  <id>//pedrohs.github.io/barra-de-leds-com-potenciometro</id>
+ <link rel="alternate" type="text/html" href="/barra-de-leds-com-potenciometro/" />
+  <id>/barra-de-leds-com-potenciometro</id>
   <published>2015-02-18T07:14:23-02:00</published>
   <updated>2015-02-18T07:14:23-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -470,20 +470,20 @@ Veja como ficou o codigo completo:&lt;/p&gt;
 
 &lt;p&gt;Só lembrando caso queiram aprender mais sobre o modulo Johnny-Five exite a Wiki deles: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/barra-de-leds-com-potenciometro/&quot;&gt;Barra de leds com potenciômetro utilizando Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 18, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/barra-de-leds-com-potenciometro/&quot;&gt;Barra de leds com potenciômetro utilizando Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 18, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Controlando led utilizando botão com Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/controlando-led-com-botao/" />
-  <id>//pedrohs.github.io/controlando-led-com-botao</id>
+ <link rel="alternate" type="text/html" href="/controlando-led-com-botao/" />
+  <id>/controlando-led-com-botao</id>
   <published>2015-02-17T09:12:51-02:00</published>
   <updated>2015-02-17T09:12:51-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -573,20 +573,20 @@ Arduino pronto vamos montar na nossa protoboard o led e botão.
 
 &lt;p&gt;Viram como é simples? Caso queiram ver mais funções que podem fazer com o botão e o led acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-five Wiki&lt;/a&gt;, espero que tenham gostado se possível comente fale oque achou da postagem se encontrou algum erro etc, vejo vocês na próxima. &lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/controlando-led-com-botao/&quot;&gt;Controlando led utilizando botão com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 17, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/controlando-led-com-botao/&quot;&gt;Controlando led utilizando botão com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 17, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Lendo potenciômetro com Node.js e Arduíno]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/lendo-potenciometro/" />
-  <id>//pedrohs.github.io/lendo-potenciometro</id>
+ <link rel="alternate" type="text/html" href="/lendo-potenciometro/" />
+  <id>/lendo-potenciometro</id>
   <published>2015-02-16T13:11:24-02:00</published>
   <updated>2015-02-16T13:11:24-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -665,20 +665,20 @@ Feito isso crie uma pasta aonde preferir para salvar seu projeto, abra o &lt;str
 
 &lt;p&gt;Opa aqui vai uma dica, caso você queira aprender muito mais sobre o modulo johnny-five basta acessar a Wiki deles: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;  tem vários exemplos lá. &lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 16, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 16, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Piscando led com Node.js e Arduino]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/piscando-led-com-node.js-e-arduino/" />
-  <id>//pedrohs.github.io/piscando-led-com-node.js-e-arduino</id>
+ <link rel="alternate" type="text/html" href="/piscando-led-com-node.js-e-arduino/" />
+  <id>/piscando-led-com-node.js-e-arduino</id>
   <published>2015-02-15T16:08:20-02:00</published>
   <updated>2015-02-15T16:08:20-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -731,20 +731,20 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
 
 &lt;p&gt;Aguardem ate a mensagem &lt;strong&gt;“Arduino Pronto”&lt;/strong&gt; e o led começara a piscar, Facil não? :) Espero que tenham gostado do post, tentei explicar ao máximo, caso encontrarem algum erro comentem! Aguardem novas postagens.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/piscando-led-com-node.js-e-arduino/&quot;&gt;Piscando led com Node.js e Arduino&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/piscando-led-com-node.js-e-arduino/&quot;&gt;Piscando led com Node.js e Arduino&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Node.JS, Instalação e mais umas coisinhas]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/instala%C3%A7%C3%A3o-nodejs/" />
-  <id>//pedrohs.github.io/instalação-nodejs</id>
+ <link rel="alternate" type="text/html" href="/instala%C3%A7%C3%A3o-nodejs/" />
+  <id>/instalação-nodejs</id>
   <published>2015-02-15T11:55:42-02:00</published>
   <updated>2015-02-15T11:55:42-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -782,20 +782,20 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
 
 &lt;p&gt;Acho que é só isso, nos próximos posts vamos brincar um pouco com node.js e Arduino. Nos vemos em breve. &lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/instala%C3%A7%C3%A3o-nodejs/&quot;&gt;Node.JS, Instalação e mais umas coisinhas&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/instala%C3%A7%C3%A3o-nodejs/&quot;&gt;Node.JS, Instalação e mais umas coisinhas&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Primeira Postagem - Welcome!]]></title>
- <link rel="alternate" type="text/html" href="//pedrohs.github.io/primeiro-post/" />
-  <id>//pedrohs.github.io/primeiro-post</id>
+ <link rel="alternate" type="text/html" href="/primeiro-post/" />
+  <id>/primeiro-post</id>
   <published>2015-02-15T08:31:00-02:00</published>
   <updated>2015-02-15T08:31:00-02:00</updated>
   <author>
     <name>Pedro Henrique</name>
-    <uri>//pedrohs.github.io</uri>
+    <uri></uri>
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -806,7 +806,7 @@ Criei este blog para poder compartilhar o pouco que sei sobre programação, nã
 
 &lt;p&gt;&lt;em&gt;Sejam bem-vindos&lt;/em&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/primeiro-post/&quot;&gt;Primeira Postagem - Welcome!&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/primeiro-post/&quot;&gt;Primeira Postagem - Welcome!&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
 </entry>
 

@@ -5,7 +5,7 @@ date: 2015-02-22 09:38:24
 tags: [nodejs]
 description: Hoje vou mostrar a vocês a como criar um servidor Http com node.js para exibir um *html*, vou ensinar isso a vocês pois nas próximas postagens vamos criar algumas paginas html que vão se comunicar com o Arduino via node.js, então se preparem!
 image:
-  feature: arduino.jpg
+  feature: background-2.jpg
 ---
 Hoje vou mostrar a vocês a como criar um servidor Http com node.js para exibir um *html*, vou ensinar isso a vocês pois nas próximas postagens vamos criar algumas paginas html que vão se comunicar com o Arduino via node.js, então se preparem!
 
