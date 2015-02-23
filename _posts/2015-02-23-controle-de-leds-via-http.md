@@ -3,7 +3,7 @@ layout: post
 title: Controlando Leds via pagina web utilizando Node.js e Arduíno
 date: 2015-02-23 09:24:14
 tags: [nodejs, arduino]
-description:
+description: Vamos hoje criar uma pagina html aonde terá botôes que quando clicados vão acender e apagar leds ligados ao Arduíno utilizando Node.js.
 image:
   feature: arduino.jpg
 ---
