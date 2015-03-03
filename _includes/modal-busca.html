@@ -1,6 +1,6 @@
 <div id="modalContent" ng-show="modalView">
 	<div id="modalPesq">
-		<a ng-click="modalPesq()" id="modalClose"><img src="{{site.url}}/assets/icons/close.png"></a>
+		<a ng-click="modalPesq()" id="modalClose" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
 		<h1>O que você está procurando?</h1>
 		<input type="text" class="form-control" ng-model="inputPesq" placeholder="Digite aqui o'que deseja procurar.">
 		<div ng-show="inputPesq" id="resultados">
