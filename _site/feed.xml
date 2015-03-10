@@ -4,13 +4,155 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-03-03T10:21:34-03:00</updated>
+<updated>2015-03-10T17:23:07-03:00</updated>
 <id>/</id>
 <author>
   <name>Pedro Henrique</name>
   <uri>/</uri>
   <email>9.pedro.deoliveira@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Exibindo sensores com Socket.io e Arduíno]]></title>
+ <link rel="alternate" type="text/html" href="/exibindo-sensores-com-socket.io/" />
+  <id>/exibindo-sensores-com-socket.io</id>
+  <published>2015-03-10T08:27:08-03:00</published>
+  <updated>2015-03-10T08:27:08-03:00</updated>
+  <author>
+    <name>Pedro Henrique</name>
+    <uri></uri>
+    <email>9.pedro.deoliveira@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;Hoje vamos criar uma pagina html e exibir valores de alguns sensores em tempo real utilizando Socket.io para node.js e johnny-five para Arduíno.&lt;/p&gt;
+
+&lt;p&gt;Primeiramente vamos ligar nossos sensores ao arduino, vou utilizar um LDR que é utilizado para medir a luminosidade do ambiente, o sensor higrômetro que vamos usar para medir a umidade do solo, e um potenciômetro, os três vão usar as portas analógicas do Arduíno, veja a ligação:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/img-posts/esquema-sensores-socketio.jpg&quot; alt=&quot;Esquema de ligação dos sensores ao Arduíno&quot; /&gt;
+&lt;em&gt;(Obs: resistor de 10k usado no LDR)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Feita a ligação vamos criar uma pasta para guardar nosso projeto e em seguida instalar os módulos que o node.js vai utilizar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install socket.io johnny-five
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Que são o Socket.io e Johnny-five.
+Feito isso vamos criar um arquivo chamado &lt;strong&gt;app.js&lt;/strong&gt; e la vamos escrever nossos códigos:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fs&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;io&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;socket.io&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;johnny-five&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Fn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//aqui estou definindo uma lib do johnny-five, que logo explicarei o porque&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;arduino&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ready&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Arduino Pronto&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//continuamos daqui! &lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;servidor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;view/index.html&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//calma que ainda vamos criar esse html&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Servidor On-line&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Para quem não esta entendendo nada recomendo que leia as postagens:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pedrohs.github.io/piscando-led-com-node.js-e-arduino/&quot;&gt;Piscando led com Node.js e Arduino&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pedrohs.github.io/criando-servidor-http/&quot;&gt;Criando servidor Http e rotas simples com Node.js&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pedrohs.github.io/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pedrohs.github.io/primeiros-passos-com-socketio/&quot;&gt;Primeiros passos com Socket.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Isto é o básico para poder continuar.
+Precisamos definir nossos sensores, então:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sensorLuz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Sensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;A0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sensorSolo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Sensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;A1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;potenc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Sensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;A2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Notem que estamos utilizando o &lt;strong&gt;.scale()&lt;/strong&gt; no sensor LDR, vou explicar o porque, as portas do Arduíno leem de &lt;strong&gt;0&lt;/strong&gt; a &lt;strong&gt;1023&lt;/strong&gt; então para o sensor LDR quanto maior a luminosidade maior vai ser o valor lido na porta, e queremos exibir o valor em porcentagem ou seja de &lt;strong&gt;0&lt;/strong&gt; a &lt;strong&gt;100%&lt;/strong&gt;, para isso usamos o &lt;strong&gt;.scale([valor inicial, valor final])&lt;/strong&gt; aonde ele vai pegar o valor lido e transformar com o valor inicial e final definido dentro dele. 
+Os outros sensores estão sem mistério; Agora precisamos enviar o valor desses sensores para o socket.io exibir na pagina html que ainda vamos criar:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;sensorLuz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;change&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;emit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;sensorLuz&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;%&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;potenc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;change&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;emit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;potenc&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt; 
+&lt;span class=&quot;nx&quot;&gt;sensorSolo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;change&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1023&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;emit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;potenc&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;%&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Como mostrado na postagem anterior(&lt;a href=&quot;http://pedrohs.github.io/primeiros-passos-com-socketio/&quot;&gt;Primeiros passos com Socket.io&lt;/a&gt;) usamos o io.emit para enviar os dados, e no &lt;em&gt;sensorLuz&lt;/em&gt; veja que quando enviamos o valor(this.value) adicionamos o &lt;strong&gt;.toFixed()&lt;/strong&gt; isso porque o &lt;strong&gt;.scale()&lt;/strong&gt; que definimos neste sensor vai gerar porcentagem com virgula exemplo: &lt;em&gt;17,2548148524%&lt;/em&gt; então usamos o toFixed para arredondar o numero, e logo depois dele adicionamos o simbolo de porcentagem para já ser enviado o valor tratado.&lt;/p&gt;
+
+&lt;p&gt;No potenciômetro não a mistério, pegamos o valor “this.value” e enviamos,&lt;/p&gt;
+
+&lt;p&gt;No ultimo sensor usamos o &lt;strong&gt;Fn&lt;/strong&gt; que definimos no topo do código, para podermos usar a função &lt;strong&gt;.map()&lt;/strong&gt; do johnny-five que é idêntica ao &lt;a href=&quot;http://arduino.cc/en/reference/map&quot;&gt;.map do Arduíno&lt;/a&gt; que vamos utilizar para resolver o seguinte problema:
+O sensor higrômetro funciona assim: quanto maior a umidade no solo menor o valor lido pelo arduino, e quando menor a umidade maior sera o valor lido, e como queremos exibir em porcentagem o &lt;strong&gt;.scale()&lt;/strong&gt; não conseguiria inverter esse valor e transformar em porcentagem, para isso vamos usar o &lt;strong&gt;.map(valor, valorInicial, valorFinal, novoValorInicial, novoValorFinal)&lt;/strong&gt; sacaram ? pois bem em seguida enviamos a variável e adicionamos o simbolo de porcentagem.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Prestem atenção aos nomes definidos nos emits(“sensorLuz”, “potenc”, “potenc”) pois são com eles que recuperamos o valor na pagina.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Feito isso terminamos a parte do servidor, vamos agora criar uma pasta chamada &lt;em&gt;view&lt;/em&gt; e dentro dela criaremos o arquivo &lt;strong&gt;index.html&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Sensores&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/socket.io/socket.io.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;socket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// faz a conexão com o socket.io do node.js&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;//recebe o valor &amp;quot;sensorLuz&amp;quot; enviado pelo node.js&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;sensorLuz&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#luz&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//escreve o &amp;quot;valor&amp;quot; que é passado na função no id #luz&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;//recebe o valor &amp;quot;sensorSolo&amp;quot; enviado pelo node.js&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;sensorSolo&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#umidSolo&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//escreve o &amp;quot;valor&amp;quot; que é passado na função no id #umidSolo&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;//recebe o valor &amp;quot;potenc&amp;quot; enviado pelo node.js&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;potenc&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#potenc&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//escreve o &amp;quot;valor&amp;quot; que é passado na função no id #potenc&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;container&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Informações:&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&amp;lt;!--Notem que os IDs são os mesmos passados para usar o .text()--&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Luminosidade: &lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;luz&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text-primary&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;0%&lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Umidade Solo: &lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;umidSolo&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text-warning&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;0%&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Valor Potenciômetro: &lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;potenc&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text-success&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Não vou dar muito destaque ao html porque não é o foco do blog, mas caso vocês não tenham entendido alguma coisa, comentem que eu faço questão em explicar.&lt;/p&gt;
+
+&lt;p&gt;Depois de tudo isso vamos finalmente rodar nosso codigo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node app.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Esperem aparecer no console &lt;em&gt;“Arduino Pronto”&lt;/em&gt; e acessem http://localhost:4000/ e iram ver os valores mudando, notem o valor do LDR como é sensível e muda muito rápido.
+Então para mais infomações acessem a wiki do johnny-five &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki/&quot;&gt;clicando aqui&lt;/a&gt;, e o site do socket.io &lt;a href=&quot;http://socket.io/&quot;&gt;clique aqui&lt;/a&gt;.
+Qualquer duvida comente, espero que tenham gostado, ate a próxima.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;/exibindo-sensores-com-socket.io/&quot;&gt;Exibindo sensores com Socket.io e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on March 10, 2015.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -29,7 +171,7 @@
 
 &lt;p&gt;E para mostrar como ele funciona vamos criar uma especie de chat, que irá conter um input aonde o usuário digita a mensagem, aperta o botão e envia a todos que estão acessando o chat, também vamos mostrar o total de usuários online; Então vamos la:&lt;/p&gt;
 
-&lt;p&gt;Vamos utilizar 3 módulos no total, mas 2 deles são nativos do node.js, então não é necessário instalá-los, então vamos instalar o socket.io, abra o &lt;strong&gt;terminal&lt;/strong&gt; ou &lt;strong&gt;prompt de comando&lt;/strong&gt; digite: &lt;/p&gt;
+&lt;p&gt;Vamos utilizar 3 módulos no total, mas 2 deles são nativos do node.js, então não é necessário instalá-los, então vamos instalar o socket.io, abra o &lt;strong&gt;terminal&lt;/strong&gt; ou &lt;strong&gt;prompt de comando&lt;/strong&gt; digite:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;npm install socket.io
 &lt;/code&gt;&lt;/pre&gt;
@@ -177,7 +319,7 @@ Agora abra o &lt;strong&gt;terminal&lt;/strong&gt; ou &lt;strong&gt;prompt de co
 &lt;pre&gt;&lt;code&gt;node app.js 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Abra seu navegador e acesse http://localhost:4000/ vão ver um input e um botão no canto inferior da pagina, digite a mensagem e clique em enviar, o legal é você abrir em vários navegadores, ou abas para verem as coisas funcionando em tempo real; Fácil ? pois bem para mais informações sobre o socket.io acessem o site deles &lt;a href=&quot;http://socket.io/&quot;&gt;http://socket.io/&lt;/a&gt; la tem outros 2 exemplos de como utilizar ele. em caso de duvidas comente ai a baixo ok?, fiquem ligados para a próxima postagem, Fui. &lt;/p&gt;
+&lt;p&gt;Abra seu navegador e acesse http://localhost:4000/ vão ver um input e um botão no canto inferior da pagina, digite a mensagem e clique em enviar, o legal é você abrir em vários navegadores, ou abas para verem as coisas funcionando em tempo real; Fácil ? pois bem para mais informações sobre o socket.io acessem o site deles &lt;a href=&quot;http://socket.io/&quot;&gt;http://socket.io/&lt;/a&gt; la tem outros 2 exemplos de como utilizar ele. em caso de duvidas comente ai a baixo ok?, fiquem ligados para a próxima postagem, Fui.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;/primeiros-passos-com-socketio/&quot;&gt;Primeiros passos com Socket.io&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on March 02, 2015.&lt;/p&gt;
   </content>
@@ -673,7 +815,7 @@ Exemplo, se você definir: &lt;strong&gt;&lt;em&gt;lcd.cursor(1,5)&lt;/em&gt;&lt
   <content type="html">
     &lt;p&gt;Nos últimos posts falamos sobre &lt;a href=&quot;https://pedrohs.github.io/lendo-potenciometro/&quot;&gt;Potenciômetros&lt;/a&gt; e &lt;a href=&quot;https://pedrohs.github.io/controlando-led-com-botao/&quot;&gt;Leds&lt;/a&gt; então que tal brincar um pouco usando os dois juntos ?, então hoje vamos montar uma barra de leds que conforme é aumentado o valor do potenciômetro os leds vão acendendo e se diminuir eles vão se apagando e para ficar mais &lt;em&gt;bonitinho&lt;/em&gt; vamos ligar os leds nos PWMs do Arduíno para fazer um efeito fade para quando acender e apagar os leds.&lt;/p&gt;
 
-&lt;p&gt;Como nas outras postagens precisamos antes de mais nada enviar o exemplo &lt;strong&gt;StandardFirmata&lt;/strong&gt; para isso abra a IDE do Arduíno e acesse &lt;strong&gt;Files &amp;gt; Examples &amp;gt; Firmata &amp;gt; StandardFirmata&lt;/strong&gt; em seguida clique em &lt;strong&gt;Upload&lt;/strong&gt;. Arduino pronto vamos montar nossos leds e o potenciômetro na protoboard: &lt;/p&gt;
+&lt;p&gt;Como nas outras postagens precisamos antes de mais nada enviar o exemplo &lt;strong&gt;StandardFirmata&lt;/strong&gt; para isso abra a IDE do Arduíno e acesse &lt;strong&gt;Files &amp;gt; Examples &amp;gt; Firmata &amp;gt; StandardFirmata&lt;/strong&gt; em seguida clique em &lt;strong&gt;Upload&lt;/strong&gt;. Arduino pronto vamos montar nossos leds e o potenciômetro na protoboard:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/img-posts/esquema-barra-de-leds-potenciometro.jpg&quot; alt=&quot;Esquema de ligação dos leds e potenciômetro ao Arduíno&quot; /&gt;&lt;/p&gt;
 
@@ -714,7 +856,7 @@ Definido os leds falta o potenciometro:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;potenciometro&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;five&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Sensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;A0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Pronto, vamos agora fazer os leds acenderem conforme o valor do potenciômetro, então para pegar o valor do potenciômetro: &lt;/p&gt;
+&lt;p&gt;Pronto, vamos agora fazer os leds acenderem conforme o valor do potenciômetro, então para pegar o valor do potenciômetro:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;potenciometro&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;change&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;valorPotenc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//a variavel valorPotenc irá guardar o valor do potenciômetro&lt;/span&gt;
@@ -722,7 +864,7 @@ Definido os leds falta o potenciometro:&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Vocês podem notar que ao invés de usarmos &lt;em&gt;potenciometro.on(“data”)&lt;/em&gt; como eu expliquei a vocês na outra postagem(&lt;a href=&quot;https://pedrohs.github.io/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt;) usamos o &lt;strong&gt;“change”&lt;/strong&gt; pois o metodo &lt;strong&gt;“data”&lt;/strong&gt; executa infinitamente independente se o valor mudou ou não, já o &lt;strong&gt;“change”&lt;/strong&gt; executa o codigo apenas quando o valor muda e com isso o node.js e Arduíno ficam mais “aliviados”, pois dependendo da aplicação pode ajudar no desempenho das funções.
-Agora para acendermos os leds vamos fazer uma conta básica, vamos utilizar &lt;strong&gt;6 leds&lt;/strong&gt;, e sabemos que o Arduíno “lé” o potenciômetro de &lt;strong&gt;0 a 1023&lt;/strong&gt; então vamos dividir &lt;strong&gt;1023 por 6&lt;/strong&gt; vai resultar em 170 aredondado, ou seja a cada led terá uma diferença de 170 um do outro, não entendeu ? vamos ver no código: &lt;/p&gt;
+Agora para acendermos os leds vamos fazer uma conta básica, vamos utilizar &lt;strong&gt;6 leds&lt;/strong&gt;, e sabemos que o Arduíno “lé” o potenciômetro de &lt;strong&gt;0 a 1023&lt;/strong&gt; então vamos dividir &lt;strong&gt;1023 por 6&lt;/strong&gt; vai resultar em 170 aredondado, ou seja a cada led terá uma diferença de 170 um do outro, não entendeu ? vamos ver no código:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valorPotenc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;170&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 	&lt;span class=&quot;nx&quot;&gt;led0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fadeIn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -938,7 +1080,7 @@ Arduino pronto vamos montar na nossa protoboard o led e botão.
 
 &lt;p&gt;Feito isso espere aparecer a mensagem &lt;em&gt;Arduino Pronto&lt;/em&gt; assim que aparecer pressione o botão uma vez e verá o led ligar, pressione novamente e ele vai desligar.&lt;/p&gt;
 
-&lt;p&gt;Viram como é simples? Caso queiram ver mais funções que podem fazer com o botão e o led acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-five Wiki&lt;/a&gt;, espero que tenham gostado se possível comente fale oque achou da postagem se encontrou algum erro etc, vejo vocês na próxima. &lt;/p&gt;
+&lt;p&gt;Viram como é simples? Caso queiram ver mais funções que podem fazer com o botão e o led acessem: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki&quot;&gt;Johnny-five Wiki&lt;/a&gt;, espero que tenham gostado se possível comente fale oque achou da postagem se encontrou algum erro etc, vejo vocês na próxima.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;/controlando-led-com-botao/&quot;&gt;Controlando led utilizando botão com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 17, 2015.&lt;/p&gt;
   </content>
@@ -959,7 +1101,7 @@ Arduino pronto vamos montar na nossa protoboard o led e botão.
   <content type="html">
     &lt;p&gt;Hoje vamos ler o valor de um potenciômetro ligado ao Arduíno utilizando o modulo &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;johnny-five&lt;/a&gt; do node.js sem digitar nenhum código no Arduíno como na &lt;a href=&quot;https://pedrohs.github.io/piscando-led-com-node.js-e-arduino/&quot;&gt;postagem anterior&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;No Arduíno precisamos enviar o código &lt;em&gt;StandardFirmata&lt;/em&gt; que tem na própria IDE do Arduíno, então para enviá-la, abra a IDE do Arduíno e acesse &lt;strong&gt;Files &amp;gt; Examples &amp;gt; Firmata &amp;gt; StandardFirmata&lt;/strong&gt; em seguida clique em &lt;strong&gt;Upload&lt;/strong&gt; feito isso vamos ligar nosso potenciômetro ao Arduíno, como no exemplo abaixo: &lt;/p&gt;
+&lt;p&gt;No Arduíno precisamos enviar o código &lt;em&gt;StandardFirmata&lt;/em&gt; que tem na própria IDE do Arduíno, então para enviá-la, abra a IDE do Arduíno e acesse &lt;strong&gt;Files &amp;gt; Examples &amp;gt; Firmata &amp;gt; StandardFirmata&lt;/strong&gt; em seguida clique em &lt;strong&gt;Upload&lt;/strong&gt; feito isso vamos ligar nosso potenciômetro ao Arduíno, como no exemplo abaixo:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/img-posts/esquema-ligacao-potenciometro.jpg&quot; alt=&quot;Exemplo de como ligar o potenciômetro o arduino&quot; /&gt;&lt;/p&gt;
 
@@ -1030,7 +1172,7 @@ Feito isso crie uma pasta aonde preferir para salvar seu projeto, abra o &lt;str
 
 &lt;p&gt;Simples não? :) espero que tenham gostado, se possível comente e diga oque achou do post, oque deve melhorar, se encontrou algum erro ou se precisa de ajuda!, vejo vocês no próximo post.&lt;/p&gt;
 
-&lt;p&gt;Opa aqui vai uma dica, caso você queira aprender muito mais sobre o modulo johnny-five basta acessar a Wiki deles: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;  tem vários exemplos lá. &lt;/p&gt;
+&lt;p&gt;Opa aqui vai uma dica, caso você queira aprender muito mais sobre o modulo johnny-five basta acessar a Wiki deles: &lt;a href=&quot;https://github.com/rwaldron/johnny-five/&quot;&gt;Johnny-Five - Wiki&lt;/a&gt;  tem vários exemplos lá.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;/lendo-potenciometro/&quot;&gt;Lendo potenciômetro com Node.js e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 16, 2015.&lt;/p&gt;
   </content>
@@ -1115,14 +1257,14 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
-    &lt;p&gt;Pretendo começar uma serie de tutoriais usando Node.js e Arduino e para isso preciso antes mostrá-los a como fazer a instalação do Node.js e mais algumas ferramentas que podem ajudar e muito vocês! &lt;/p&gt;
+    &lt;p&gt;Pretendo começar uma serie de tutoriais usando Node.js e Arduino e para isso preciso antes mostrá-los a como fazer a instalação do Node.js e mais algumas ferramentas que podem ajudar e muito vocês!&lt;/p&gt;
 
 &lt;h2 id=&quot;instalao-do-nodejs&quot;&gt;Instalação do Node.js&lt;/h2&gt;
-&lt;p&gt;Para quem usa Windows ou Mac OSX basta fazer o download do instalador no site oficial do node.js &lt;a href=&quot;http://nodejs.org/download/&quot;&gt;http://nodejs.org/download/&lt;/a&gt; baixem o instalador de acordo com a versão do seu sistema, depois é só fazer a instalação como todo programa. &lt;/p&gt;
+&lt;p&gt;Para quem usa Windows ou Mac OSX basta fazer o download do instalador no site oficial do node.js &lt;a href=&quot;http://nodejs.org/download/&quot;&gt;http://nodejs.org/download/&lt;/a&gt; baixem o instalador de acordo com a versão do seu sistema, depois é só fazer a instalação como todo programa.&lt;/p&gt;
 
-&lt;p&gt;Para quem usa Linux basta seguir os procedimentos deste link: &lt;a href=&quot;https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager&quot;&gt;https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;Para quem usa Linux basta seguir os procedimentos deste link: &lt;a href=&quot;https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager&quot;&gt;https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;A pós a instalação do Node.js abra o &lt;strong&gt;Terminal&lt;/strong&gt; para quem utiliza linux ou &lt;strong&gt;Prompt de Comando&lt;/strong&gt; para usuários Windows e digite o comando: &lt;/p&gt;
+&lt;p&gt;A pós a instalação do Node.js abra o &lt;strong&gt;Terminal&lt;/strong&gt; para quem utiliza linux ou &lt;strong&gt;Prompt de Comando&lt;/strong&gt; para usuários Windows e digite o comando:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;node -v
 &lt;/code&gt;&lt;/pre&gt;
@@ -1147,7 +1289,7 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
   &lt;li&gt;&lt;a href=&quot;http://sublimetextdicas.com.br/&quot;&gt;http://sublimetextdicas.com.br/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Acho que é só isso, nos próximos posts vamos brincar um pouco com node.js e Arduino. Nos vemos em breve. &lt;/p&gt;
+&lt;p&gt;Acho que é só isso, nos próximos posts vamos brincar um pouco com node.js e Arduino. Nos vemos em breve.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;/instala%C3%A7%C3%A3o-nodejs/&quot;&gt;Node.JS, Instalação e mais umas coisinhas&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on February 15, 2015.&lt;/p&gt;
   </content>
@@ -1169,7 +1311,7 @@ Agora vamos montar na protoboard nosso Led, para isto estou utilizando um led de
     &lt;p&gt;Iae manolos, como é que vocês estão?&lt;/p&gt;
 
 &lt;p&gt;Meu nome é Pedro Henrique tenho 18 anos e moro em Marília/SP.
-Criei este blog para poder compartilhar o pouco que sei sobre programação, não sou um mentre jedi da programação e nem sou formado em alguma faculdade, sou apenas um jovem padawan que gosta de aprender e tudo que sei hoje aprendi lendo blogs, posts em grupos e entre outros, e hoje tenho como objetivo tentar passar oque aprendi com vocês através deste blog, então espero que gostem do conteúdo, se tiverem alguma duvida ou acharem algum erro comentem, acho que é só isso, nos vemos em breve :) &lt;/p&gt;
+Criei este blog para poder compartilhar o pouco que sei sobre programação, não sou um mentre jedi da programação e nem sou formado em alguma faculdade, sou apenas um jovem padawan que gosta de aprender e tudo que sei hoje aprendi lendo blogs, posts em grupos e entre outros, e hoje tenho como objetivo tentar passar oque aprendi com vocês através deste blog, então espero que gostem do conteúdo, se tiverem alguma duvida ou acharem algum erro comentem, acho que é só isso, nos vemos em breve :)&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Sejam bem-vindos&lt;/em&gt;&lt;/p&gt;
 
