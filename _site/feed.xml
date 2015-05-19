@@ -2,10 +2,17 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Pedro HS</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
+<<<<<<< HEAD
 <link rel="self" type="application/atom+xml" href="//pedrohs.github.io/feed.xml" />
 <link rel="alternate" type="text/html" href="//pedrohs.github.io" />
 <updated>2015-05-19T14:00:59-03:00</updated>
 <id>//pedrohs.github.io/</id>
+=======
+<link rel="self" type="application/atom+xml" href="/feed.xml" />
+<link rel="alternate" type="text/html" href="" />
+<updated>2015-03-10T17:23:07-03:00</updated>
+<id>/</id>
+>>>>>>> 0ad491e5b364d7a54658cbb453cfc6ca0a51710f
 <author>
   <name>Pedro Henrique</name>
   <uri>//pedrohs.github.io/</uri>
@@ -14,6 +21,7 @@
 
 
 <entry>
+<<<<<<< HEAD
   <title type="html"><![CDATA[Criando banco de dados com neDB]]></title>
  <link rel="alternate" type="text/html" href="//pedrohs.github.io/criando-banco-de-dados-com-nedb/" />
   <id>//pedrohs.github.io/criando-banco-de-dados-com-nedb</id>
@@ -180,11 +188,20 @@ Veja que se você ir no diretorio aonde definiu o banco de dados, irá aparecer 
   <title type="html"><![CDATA[Exibindo sensores com Socket.io e Arduíno]]></title>
  <link rel="alternate" type="text/html" href="//pedrohs.github.io/exibindo-sensores-com-socket.io/" />
   <id>//pedrohs.github.io/exibindo-sensores-com-socket.io</id>
+=======
+  <title type="html"><![CDATA[Exibindo sensores com Socket.io e Arduíno]]></title>
+ <link rel="alternate" type="text/html" href="/exibindo-sensores-com-socket.io/" />
+  <id>/exibindo-sensores-com-socket.io</id>
+>>>>>>> 0ad491e5b364d7a54658cbb453cfc6ca0a51710f
   <published>2015-03-10T08:27:08-03:00</published>
   <updated>2015-03-10T08:27:08-03:00</updated>
   <author>
     <name>Pedro Henrique</name>
+<<<<<<< HEAD
     <uri>//pedrohs.github.io</uri>
+=======
+    <uri></uri>
+>>>>>>> 0ad491e5b364d7a54658cbb453cfc6ca0a51710f
     <email>9.pedro.deoliveira@gmail.com</email>
   </author>
   <content type="html">
@@ -313,7 +330,11 @@ O sensor higrômetro funciona assim: quanto maior a umidade no solo menor o valo
 Então para mais infomações acessem a wiki do johnny-five &lt;a href=&quot;https://github.com/rwaldron/johnny-five/wiki/&quot;&gt;clicando aqui&lt;/a&gt;, e o site do socket.io &lt;a href=&quot;http://socket.io/&quot;&gt;clique aqui&lt;/a&gt;.
 Qualquer duvida comente, espero que tenham gostado, ate a próxima.&lt;/p&gt;
 
+<<<<<<< HEAD
     &lt;p&gt;&lt;a href=&quot;//pedrohs.github.io/exibindo-sensores-com-socket.io/&quot;&gt;Exibindo sensores com Socket.io e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;//pedrohs.github.io&quot;&gt;Pedro HS&lt;/a&gt; on March 10, 2015.&lt;/p&gt;
+=======
+    &lt;p&gt;&lt;a href=&quot;/exibindo-sensores-com-socket.io/&quot;&gt;Exibindo sensores com Socket.io e Arduíno&lt;/a&gt; was originally published by Pedro Henrique at &lt;a href=&quot;&quot;&gt;Pedro HS&lt;/a&gt; on March 10, 2015.&lt;/p&gt;
+>>>>>>> 0ad491e5b364d7a54658cbb453cfc6ca0a51710f
   </content>
 </entry>
 
